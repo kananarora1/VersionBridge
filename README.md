@@ -1,8 +1,10 @@
 # StairMigration
 
+**[Read the Product Requirements Document (PDF)](docs/PRD.pdf)**
+
 Evidence-backed software migration with code analysis, structure-aware retrieval, reviewable patches, and sandboxed verification.
 
-**Status:** Planning / documentation only. Application code has not been implemented.
+**Status:** Repository scaffold ready. Application code has not been implemented.
 
 The first milestone targets **Spring Boot 2.7.x → 3.0.x**, with Maven and Java 17. This deliberately bounded migration is the project's learning and evaluation target; it is not a recommendation to deploy an historical framework release in production.
 
@@ -11,6 +13,8 @@ The first milestone targets **Spring Boot 2.7.x → 3.0.x**, with Maven and Java
 - [Product Requirements Document - designed PDF](docs/PRD.pdf)
 - [Product Requirements Document - editable source](docs/PRD.md)
 - [Phased development plan](docs/DEVELOPMENT_PLAN.md)
+- [Repository structure and module boundaries](docs/REPOSITORY_STRUCTURE.md)
+- [Manual end-to-end checkpoint records](tests/manual/README.md)
 
 The PRD defines scope, architecture, data models, endpoints, retrieval and patch policies, evaluation, and release criteria. The development plan breaks implementation into six phases with mandatory manual end-to-end checkpoints, sample fixture repositories, expected outcomes, pass/fail gates, and rollback criteria.
 
@@ -62,10 +66,40 @@ Read the PRD and development plan, then begin Phase 0: finalize the technology d
 stairmigration/
   README.md
   .gitignore
+  apps/
+    api/                    # HTTP entry point and orchestration
+    cli/                    # Local analysis / review commands
+    verifier-worker/        # Isolated verification process entry point
+  modules/
+    domain/                 # Entities, state machine, shared interfaces
+    ingestion/              # Maven / Java / XML readers and code hierarchy
+    corpus/                 # Versioned official docs and section hierarchy
+    retrieval/              # Lexical, dense, hierarchy expansion, rank fusion
+    rules/                  # Migration findings and approved recipes
+    patching/               # Evidence-backed plans, generation, diff validation
+    verifier/               # Runner protocol, limits, outcome / log parsing
+    storage/                # Run ledger, indexes, artifacts, DB migrations
+  config/                   # Policy and local configuration examples
+  fixtures/                 # Eight planned migration fixture repositories
+  evals/                    # Datasets, baseline experiments, metric definitions
+  tests/
+    contracts/              # API and worker boundary tests
+    integration/            # Cross-module / infrastructure tests
+    e2e/                    # Automated complete user flows
+    manual/                 # Mandatory P0-P5 checkpoint records
+  infra/
+    runner/                 # Verifier image and isolation configuration
+    database/               # Local persistence service configuration
+    observability/          # Logs, metrics, tracing configuration
+  scripts/                  # Future setup, validation, evaluation commands
   docs/
     PRD.pdf
     PRD.md
     DEVELOPMENT_PLAN.md
+    REPOSITORY_STRUCTURE.md
+    adr/                    # Architecture decisions and template
 ```
+
+Each application and module has a responsibility guide and tracked `src/` and `tests/` directories. Fixture directories describe their intended cases; their sample applications and expected manifests are Phase 0 work. See the [repository guide](docs/REPOSITORY_STRUCTURE.md) for dependency direction and the first implementation tasks.
 
 This is a local Git repository. No remote or hosted repository has been configured. No project license has been selected yet.
