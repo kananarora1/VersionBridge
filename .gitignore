@@ -1,0 +1,23 @@
+# Local machine and editor state
+.DS_Store
+.idea/
+.vscode/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Future build / runtime output
+target/
+build/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+*.log
+.cache/
+.asme/
+sandboxes/
